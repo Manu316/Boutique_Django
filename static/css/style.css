@@ -1,0 +1,114 @@
+/* Paleta */
+:root {
+  --pink-main: #F27EB4;
+  --pink-mid: #D98FB1;
+  --pink-light: #F2CEE2;
+  --gray-light: #F2F2F2;
+  --black-soft: #0D0D0D;
+}
+
+/* General */
+body {
+  background-color: var(--gray-light);
+  color: var(--black-soft);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--pink-main) !important;
+  border-bottom: 2px solid var(--pink-main);
+}
+
+.navbar-brand,
+.nav-link,
+.nav-link:hover {
+  color: white  !important;
+}
+
+.navbar .btn-outline-primary {
+  color: white !important;
+  border-color: white !important;
+}
+
+.navbar .btn-outline-primary:hover {
+  background-color: white !important;
+  color: var(--pink-main) !important;
+}
+
+/* Botones */
+.btn-primary {
+  background-color: var(--pink-main);
+  border-color: var(--pink-main);
+}
+
+.btn-primary:hover {
+  background-color: var(--pink-mid);
+  border-color: var(--pink-mid);
+}
+
+.btn-outline-primary {
+  color: var(--pink-main);
+  border-color: var(--pink-main);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--pink-main);
+  color: white;
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.badge-chip {
+  background-color: var(--pink-light);
+  color: var(--black-soft);
+  font-weight: 500;
+  border-radius: 50px;
+  padding: 6px 10px;
+}
+
+/* Secciones */
+section {
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Encabezados */
+h1, h2, h3, h4 {
+  color: var(--black-soft);
+  font-weight: 600;
+}
+
+/* Selects */
+select.form-select {
+  border-color: var(--pink-mid) !important;
+  color: var(--black-soft);
+  background-color: white;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+select.form-select:focus {
+  border-color: var(--pink-main) !important;
+  box-shadow: 0 0 0 0.25rem rgba(242, 126, 180, 0.25) !important;
+}
+
+select.form-select option {
+  color: var(--black-soft);
+  background-color: white;
+}
+
+select.form-select:hover {
+  border-color: var(--pink-main) !important;
+}
