@@ -112,3 +112,72 @@ select.form-select option {
 select.form-select:hover {
   border-color: var(--pink-main) !important;
 }
+
+/* Campos generales */
+input.form-control,
+select.form-select,
+textarea.form-control {
+  border-color: var(--pink-mid) !important;
+  color: var(--black-soft);
+  background-color: #fff;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+/* En foco */
+input.form-control:focus,
+select.form-select:focus,
+textarea.form-control:focus {
+  border-color: var(--pink-main) !important;
+  box-shadow: 0 0 0 0.25rem rgba(242, 126, 180, 0.25) !important;
+  outline: none !important;
+}
+
+/* Hover */
+input.form-control:hover,
+select.form-select:hover,
+textarea.form-control:hover {
+  border-color: var(--pink-main) !important;
+}
+
+/* Placeholder más suave */
+input::placeholder,
+textarea::placeholder {
+  color: #b07d95;
+  opacity: 0.8;
+}
+
+/* Botones de formulario */
+button, 
+.btn {
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+/* Botones primarios */
+.btn-primary {
+  background-color: var(--pink-main) !important;
+  border-color: var(--pink-main) !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--pink-mid) !important;
+  border-color: var(--pink-mid) !important;
+}
+
+/* Botones de contorno */
+.btn-outline-primary {
+  color: var(--pink-main) !important;
+  border-color: var(--pink-main) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--pink-main) !important;
+  color: white !important;
+}
+
+ /* scroll */
+html {
+  overflow-y: scroll;
+}

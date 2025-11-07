@@ -52,6 +52,21 @@ PRODUCTS = [
             }
         ],
     },
+    {
+        "id": 4,
+        "name": "Chaqueta Rosa Pastel",
+        "brand": "Trendy",
+        "category": "Abrigos / Chaquetas",
+        "description": "Chaqueta ligera de algodón con corte moderno",
+        "tags": ["invierno"],
+        "variants": [
+            {
+                "sku": "CH-PAS-L-ROS",
+                "size": "L", "color": "Rosa Pastel",
+                "images": ["https://placehold.co/600x600?text=Chaqueta+Rosa"]
+            }
+        ],
+    },    
 ]
 
 LOOKS = [
