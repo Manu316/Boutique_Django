@@ -1,25 +1,70 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Nosotros - Boutique{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-  <h2 class="fw-bold mb-4" style="color: var(--pink-main);">Sobre Nosotros</h2>
-  <p class="fs-5">
-    En <strong>Lark Boutique</strong> creemos que la moda es una forma de expresión. 
-    Buscamos resaltar la belleza y autenticidad de cada persona, ofreciendo prendas únicas 
-    con un toque artesanal y moderno.
-  </p>
+<div class="container py-4">
+  <div class="text-center mb-4">
+    <img src="{% static 'img/logo.png' %}" alt="Lark Boutique" height="150" class="mb-2">
+    <h2 class="fw-bold" style="color: var(--pink-main);">Sobre nosotros</h2>
+    <p class="text-muted">Moda que realza tu estilo con elegancia y frescura.</p>
+  </div>
 
-  <div class="row mt-4">
+  <div class="row g-3 mb-4">
     <div class="col-md-6">
-      <img src="https://placehold.co/600x400/F2CEE2/0D0D0D?text=Equipo+de+Diseño" 
-           class="img-fluid rounded shadow" alt="Equipo">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="fw-semibold">✨ Misión</h5>
+                <p>Empoderar a cada clienta a través de prendas con diseño, calidad y un toque artesanal,
+                    inspiradas en la belleza y confianza de cada mujer.</p>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6 d-flex flex-column justify-content-center">
-      <h5 class="fw-semibold">✨ Nuestra Visión</h5>
-      <p>Ser una marca referente en moda local, inspirando confianza y autenticidad en cada estilo.</p>
-      <h5 class="fw-semibold">💗 Nuestra Misión</h5>
-      <p>Empoderar a cada cliente a través de la moda, ofreciendo diseños de calidad con responsabilidad social.</p>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="fw-semibold">🌷 Visión</h5>
+                <p>Ser una marca referente en moda local, reconocida por su atención cercana, estilo actual
+                    y compromiso con la comunidad.</p>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<!-- Valores -->
+<div class="card mb-4">
+    <div class="card-body">
+      <h5 class="fw-semibold mb-3">Nuestros valores</h5>
+      <div class="d-flex flex-wrap gap-2">
+        <span class="badge badge-chip">Autenticidad</span>
+        <span class="badge badge-chip">Calidad</span>
+        <span class="badge badge-chip">Cercanía</span>
+        <span class="badge badge-chip">Creatividad</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info -->
+  <div class="row g-3 align-items-center">
+    <div class="col-md-7">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="fw-semibold">¿Dónde estamos?</h5>
+          <p class="mb-1">Coatzacoalcos, Veracruz</p>
+          <p class="mb-1">Horario: Lun–Sáb, 11:00–19:00</p>
+          <p class="mb-0">Mariano Matamoros #203 Col. Manuel Ávila Camacho</p>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="card h-100 text-center">
+        <div class="card-body">
+          <h5 class="fw-semibold">¿Hablamos?</h5>
+          <p class="text-muted">Cuéntanos qué estilo buscas y te ayudamos a armar tu look.</p>
+          <a class="btn btn-primary" href="{% url 'contacto' %}">Ir a Contacto</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

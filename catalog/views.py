@@ -137,10 +137,16 @@ def product_detail(request, pk: int):
     for v in product["variants"]:
         by_color.setdefault(v["color"], []).append(v)
 
+    # Mostrar galería solo si hay más de una variante o más de una imagen en alguna variante
+    has_gallery = (len(product["variants"]) > 1) or any(
+        len(v.get("images", [])) > 1 for v in product["variants"]
+    )        
+
     return render(request, "catalog/product_detail.html", {
         "product": product,
         "cover": cover,
         "by_color": by_color,
+        "has_gallery": has_gallery,
     })
 
 # ----- Looks -----
@@ -157,7 +163,7 @@ def look_detail(request, pk: int):
         return render(request, "404.html", status=404)
 
     # imagen de portada
-    if not look["cover"]:
+    if not look.get["cover"]:
         first_img = None
         for it in look["items"]:
             prod = next((p for p in PRODUCTS if p["id"] == it["product_id"]), None)
@@ -184,7 +190,6 @@ def look_detail(request, pk: int):
         rich_items.append({
             "product_id": prod["id"],
             "product_name": prod["name"],
-            "brand": prod["brand"],
             "variant_sku": it["variant"],
             "note": it.get("note", ""),
             "image": img,

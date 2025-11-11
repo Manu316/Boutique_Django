@@ -69,6 +69,16 @@ body {
   transform: translateY(-4px);
 }
 
+.card-img-fit{
+  width: 100%;
+  height: clamp(220px, 28vw, 340px);
+  object-fit: contain; 
+  background: #fff;
+  padding: 12px;
+  border-radius: 12px 12px 0 0;
+  display: block;
+}
+
 .badge-chip {
   background-color: var(--pink-light);
   color: var(--black-soft);
@@ -180,4 +190,47 @@ button,
  /* scroll */
 html {
   overflow-y: scroll;
+}
+
+.img-main{
+  width: 100%;
+  height: clamp(320px, 36vw, 520px);
+  object-fit: contain;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+
+/* Footer */
+footer {
+  background-color: var(--pink-main);
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 40px;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+footer a:hover {
+  color: var(--pink-light);
+  text-decoration: underline;
+}
+
+footer .social-icons i {
+  font-size: 1.3rem;
+  margin: 0 8px;
+  transition: 0.3s;
+}
+
+footer .social-icons i:hover {
+  transform: translateY(-3px);
+  color: var(--pink-light);
 }
