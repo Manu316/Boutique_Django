@@ -4,66 +4,57 @@ from django.shortcuts import render, redirect
 PRODUCTS = [
     {
         "id": 1,
-        "name": "Blusa Lino",
-        "brand": "Local",
-        "category": "Blusas",
-        "description": "Blusa fresca de lino para verano.",
-        "tags": ["boho", "verano"],
+        "name": "Vestido Ceñido Celeste",
+        "category": "Vestidos",
+        "description": "Vestido ceñido en tono celeste, ideal para primavera.",
+        "tags": ["celeste", "primavera", "casual", "vestido"],
         "variants": [
             {
-                "sku": "BL-LIN-S-VER",
-                "size": "S", "color": "Verde",
-                "images": ["https://placehold.co/600x600?text=Blusa+Verde+S"]
-            },
-            {
-                "sku": "BL-LIN-M-VER",
-                "size": "M", "color": "Verde",
-                "images": ["https://placehold.co/600x600?text=Blusa+Verde+M"]
+                "sku": "VCC-M-CEL",
+                "size": "M", "color": "Celeste",
+                "images": ["img/productos/vestido_cenido_celeste.jpg"]
             },
         ],
     },
     {
         "id": 2,
-        "name": "Pantalón Palazzo",
-        "brand": "Trendy",
-        "category": "Pantalones",
-        "description": "Palazzo cómodo, tiro alto.",
-        "tags": ["casual"],
+        "name": "Vestido Ceñido Rojo",
+        "category": "Vestidos",
+        "description": "Corte ceñido para eventos elegantes.",
+        "tags": ["noche", "elegante", "vestido", "rojo"],
         "variants": [
             {
-                "sku": "PT-PLZ-M-NEG",
-                "size": "M", "color": "Negro",
-                "images": ["https://placehold.co/600x600?text=Palazzo+Negro"]
+                "sku": "VCR-M-ROJ",
+                "size": "M", "color": "Rojo",
+                "images": ["img/productos/vestido_cenido_rojo.jpg"]
             }
         ],
     },
     {
         "id": 3,
-        "name": "Vestido Floral",
-        "brand": "Local",
+        "name": "Vestido Largo Negro",
         "category": "Vestidos",
-        "description": "Corte A, estampado floral.",
-        "tags": ["primavera", "casual"],
+        "description": "Clásico y sofisticado.",
+        "tags": ["clasico", "negro", "vestido", "elegante"],
         "variants": [
             {
-                "sku": "VS-FLR-L-MLT",
-                "size": "L", "color": "Multicolor",
-                "images": ["https://placehold.co/600x600?text=Vestido+Floral"]
+                "sku": "VL-L-NEG",
+                "size": "L", "color": "Negro",
+                "images": ["img/productos/vestido_largo.jpg"]
             }
         ],
     },
     {
         "id": 4,
-        "name": "Chaqueta Rosa Pastel",
-        "brand": "Trendy",
-        "category": "Abrigos / Chaquetas",
-        "description": "Chaqueta ligera de algodón con corte moderno",
-        "tags": ["invierno"],
+        "name": "Vestido Print Floral",
+        "category": "Vestidos",
+        "description": "Estampado floral vibrante.",
+        "tags": ["primavera", "casual", "vestido", "floral"],
         "variants": [
             {
-                "sku": "CH-PAS-L-ROS",
-                "size": "L", "color": "Rosa Pastel",
-                "images": ["https://placehold.co/600x600?text=Chaqueta+Rosa"]
+                "sku": "VPF-S-FLO",
+                "size": "S", "color": "Floral",
+                "images": ["img/productos/vestido_print.jpg"]
             }
         ],
     },    

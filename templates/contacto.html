@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Contacto - Boutique{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold mb-4" style="color: var(--pink-main);">Contáctanos</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <form>
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo electrónico</label>
+          <input type="email" class="form-control" id="email" placeholder="tucorreo@ejemplo.com">
+        </div>
+        <div class="mb-3">
+          <label for="mensaje" class="form-label">Mensaje</label>
+          <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+      </form>
+    </div>
+
+    <div class="col-md-6 mt-4 mt-md-0">
+      <h5>📍 Dirección</h5>
+      <p>Mariano Matamoros #203 Col. Manuel Ávila Camacho</p>
+      <p>Coatzacoalcos, Veracruz</p>
+      <h5>📞 Teléfono</h5>
+      <p>+52 921 182 0229</p>
+      <h5>🕒 Horario</h5>
+      <p>Lunes a Sábado, 11:00 a 19:00 hrs</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Nosotros - Boutique{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold mb-4" style="color: var(--pink-main);">Sobre Nosotros</h2>
+  <p class="fs-5">
+    En <strong>Lark Boutique</strong> creemos que la moda es una forma de expresión. 
+    Buscamos resaltar la belleza y autenticidad de cada persona, ofreciendo prendas únicas 
+    con un toque artesanal y moderno.
+  </p>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <img src="https://placehold.co/600x400/F2CEE2/0D0D0D?text=Equipo+de+Diseño" 
+           class="img-fluid rounded shadow" alt="Equipo">
+    </div>
+    <div class="col-md-6 d-flex flex-column justify-content-center">
+      <h5 class="fw-semibold">✨ Nuestra Visión</h5>
+      <p>Ser una marca referente en moda local, inspirando confianza y autenticidad en cada estilo.</p>
+      <h5 class="fw-semibold">💗 Nuestra Misión</h5>
+      <p>Empoderar a cada cliente a través de la moda, ofreciendo diseños de calidad con responsabilidad social.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
