@@ -7,7 +7,10 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Filtros</h5>
-        <form method="get">
+        <form method="get"
+              {# hx-get="{% url 'product_list' %}" #}
+              {# hx-target="#products-zone" #}
+              {# hx-push-url="true" #}>
           <div class="mb-2">
             <label class="form-label">Talla</label>
             <select class="form-select" name="size">
@@ -28,7 +31,11 @@
           </div>
           <div class="d-grid gap-2">
             <button class="btn btn-primary" type="submit">Aplicar</button>
-            <a class="btn btn-outline-secondary" href="{% url 'product_list' %}">Limpiar</a>
+            <a class="btn btn-outline-secondary"                
+              href="{% url 'product_list' %}"
+              {# hx-get="{% url 'product_list' %}" hx-target="#products-zone" hx-push-url="true" #}>
+              Limpiar
+            </a>
           </div>
         </form>
       </div>
