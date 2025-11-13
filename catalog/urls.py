@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -10,5 +10,9 @@ urlpatterns = [
 
     # Lookbook
     path("looks/", views.look_list, name="look_list"),
-    path("looks/<int:pk>/", views.look_detail, name="look_detail"),    
+    path("looks/<int:pk>/", views.look_detail, name="look_detail"),   
+
+    # Admin Panel
+    path('adminpanel/', include('adminpanel.urls')),
+ 
 ]

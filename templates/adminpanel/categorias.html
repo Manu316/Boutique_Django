@@ -1,0 +1,61 @@
+{% extends "adminpanel/base_admin.html" %}
+{% block title %}Categorías - Panel Lark{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0 admin-title">Categorías</h2>
+  <button class="btn btn-pink-rounded" data-bs-toggle="modal" data-bs-target="#modalNuevaCategoria">
+    Nueva categoría
+  </button>
+</div>
+
+<div class="d-flex flex-wrap gap-4">
+  {% for cat in categories %}
+    <div class="admin-card-category">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0">{{ cat.name }}</h5>
+        <div>
+          <button class="btn btn-sm btn-link text-pink" title="Eliminar">
+            <i class="bi bi-trash"></i>
+          </button>
+          <button class="btn btn-sm btn-link text-pink" title="Editar">
+            <i class="bi bi-pencil-square"></i>
+          </button>
+        </div>
+      </div>
+      <p class="mb-0 text-muted small">{{ cat.description }}</p>
+    </div>
+  {% empty %}
+    <p class="text-muted">No hay categorías registradas.</p>
+  {% endfor %}
+</div>
+
+<!-- Modal Nueva Categoría -->
+<div class="modal fade" id="modalNuevaCategoria" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content admin-modal">
+      <div class="modal-body">
+        <h5 class="mb-3">Nueva categoría</h5>
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" placeholder="Ej. Blusas">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <input type="text" class="form-control" placeholder="Descripción breve">
+          </div>
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Continuar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

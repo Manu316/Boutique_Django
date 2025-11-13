@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-# ==== PLACEHOLDERS ====
+# PLACEHOLDERS
 PRODUCTS = [
     {
         "id": 1,
@@ -69,8 +69,8 @@ LOOKS = [
         "tags": ["boho", "verano"],
         "cover": "https://placehold.co/900x900?text=Look+Boho",
         "items": [
-            {"product_id": 1, "variant": "BL-LIN-M-VER", "note": "Remangar mangas"},
-            {"product_id": 2, "variant": "PT-PLZ-M-NEG"},
+            {"product_id": 1, "variant": "VCC-M-CEL", "note": "Remangar mangas"},
+            {"product_id": 2, "variant": "VCR-M-ROJ"},
         ],
     },
     {
@@ -81,7 +81,7 @@ LOOKS = [
         "tags": ["casual"],
         "cover": "https://placehold.co/900x900?text=Look+Floral", 
         "items": [
-            {"product_id": 3, "variant": "VS-FLR-L-MLT"},
+            {"product_id": 3, "variant": "VL-L-NEG"},
         ],
     },
 ]
@@ -163,7 +163,7 @@ def look_detail(request, pk: int):
         return render(request, "404.html", status=404)
 
     # imagen de portada
-    if not look.get["cover"]:
+    if not look.get("cover"):
         first_img = None
         for it in look["items"]:
             prod = next((p for p in PRODUCTS if p["id"] == it["product_id"]), None)
