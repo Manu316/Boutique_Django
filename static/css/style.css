@@ -280,7 +280,7 @@ footer .social-icons i:hover {
   padding: 32px 40px;
 }
 
-/* Título principal de la vista admin */
+/* Título principal */
 .admin-title {
   font-size: 2rem;
   font-weight: 600;
@@ -310,7 +310,7 @@ footer .social-icons i:hover {
   color: var(--pink-main) !important;
 }
 
-/* Botón pill rosa arriba a la derecha */
+/* Botón arriba a la derecha */
 .btn-pink-rounded {
   background-color: var(--pink-main);
   border-color: var(--pink-main);
@@ -325,7 +325,7 @@ footer .social-icons i:hover {
   border-color: var(--pink-mid);
 }
 
-/* Tarjetas de categorías (Blusas, Faldas, Interior…) */
+/* Tarjetas de categorías */
 .admin-card-category {
   background-color: #ffffff;
   border-radius: 18px;
@@ -334,7 +334,6 @@ footer .social-icons i:hover {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
-/* Color rosa para iconos de editar/borrar */
 .text-pink {
   color: var(--pink-main) !important;
 }
