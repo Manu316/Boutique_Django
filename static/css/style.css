@@ -203,7 +203,7 @@ html {
 
 
 /* Footer */
-footer {
+footer {  
   background-color: var(--pink-main);
   color: white;
   text-align: center;
