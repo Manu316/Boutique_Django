@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block title %}{{ product.name }} - Boutique{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-12 col-md-6">
+    {% if cover %}<img src="{% static cover %}" class="img-main" alt="{{ product.name }}">{% endif %}
+    {% if has_gallery %}
+      <div class="d-flex flex-wrap gap-2">
+        {% for v in product.variants %}
+          {% for img in v.images %}
+            <img src="{% static img %}" class="rounded" style="width:90px;height:90px;object-fit:cover;" alt="{{ v.sku }}">
+          {% endfor %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+  <div class="col-12 col-md-6">
+    <h2 class="mb-1">{{ product.name }}</h2>
+    <p class="text-muted">{{ product.brand }} · {{ product.category }}</p>
+    <p>{{ product.description }}</p>
+
+    <h6 class="mt-4">Variantes por color</h6>
+    {% for color, variants in by_color.items %}
+      <div class="mb-2">
+        <strong>{{ color }}:</strong>
+        {% for v in variants %}
+          <span class="badge text-bg-light border">{{ v.size }}</span>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <div class="mt-3">
+      {% for t in product.tags %}
+        <span class="badge rounded-pill text-bg-secondary badge-chip">{{ t }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
