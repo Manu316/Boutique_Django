@@ -1,0 +1,77 @@
+{% extends "adminpanel/base_admin.html" %}
+{% block title %}Productos - Panel Lark{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0 text-white">Productos</h2>
+  <button class="btn btn-pink-rounded" data-bs-toggle="modal" data-bs-target="#modalNuevoProducto">
+    Nuevo producto
+  </button>
+</div>
+
+<div class="admin-card-table p-0">
+  <table class="table mb-0 align-middle">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th class="text-center">Stock</th>
+        <th class="text-center" style="width: 90px;">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in products %}
+        <tr>
+          <td>{{ p.name }}</td>
+          <td>{{ p.category }}</td>
+          <td class="text-center">{{ p.stock }}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-link text-pink" title="Eliminar">
+              <i class="bi bi-trash"></i>
+            </button>
+            <button class="btn btn-sm btn-link text-pink" title="Editar">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4" class="text-center text-muted">No hay productos.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal de nuevo producto -->
+<div class="modal fade" id="modalNuevoProducto" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content admin-modal">
+      <div class="modal-body">
+        <h5 class="mb-3">Nuevo producto</h5>
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" placeholder="Ej. Blusa negra">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Categoría</label>
+            <input type="text" class="form-control" placeholder="Ej. Blusas">
+            {# más adelante será un <select> #}
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Stock</label>
+            <input type="number" class="form-control" min="0" value="0">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Precio</label>
+            <input type="number" step="0.01" class="form-control" min="0" value="0">
+          </div>
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Continuar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

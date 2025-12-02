@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block title %}Inicio - Boutique{% endblock %}
+
+{% block content %}
+<div class="container text-center py-5 w-100" style="max-width: 400px;">
+  <img src="{% static 'img/logo.png' %}" alt="Lark Boutique" height="150" class="mb-2">
+
+  <h1 class="fw-bold text-uppercase" style="color: var(--pink-main);">
+    Bienvenido/a 💕
+  </h1>
+  <p class="lead text-muted mt-3">
+    Explora las últimas tendencias, descubre nuestros looks y encuentra tu estilo único.
+  </p>
+
+  <div class="mt-5">
+    <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg mx-2">Ver Productos</a>
+    <a href="{% url 'look_list' %}" class="btn btn-outline-primary btn-lg mx-2">Ver Looks</a>
+  </div>
+</div>
+{% endblock %}

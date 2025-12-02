@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Looks - Boutique{% endblock %}
+{% block content %}
+<h3 class="mb-3">Lookbook</h3>
+
+<form class="row g-2 mb-3" method="get">
+  <div class="col-12 col-md-4">
+    <input class="form-control" name="tag" value="{{ tag|default:'' }}" placeholder="Filtrar por tag (boho, verano...)">
+  </div>
+  <div class="col">
+    <button class="btn btn-primary">Aplicar</button>
+    <a class="btn btn-outline-secondary" href="{% url 'look_list' %}">Limpiar</a>
+  </div>
+</form>
+
+<div class="row g-3">
+  {% for look in looks %}
+    <div class="col-6 col-lg-4">
+      <div class="card h-100">
+        {% if look.cover %}
+          <img src="{{ look.cover }}" class="card-img-top card-img-fit" alt="{{ look.name }}">
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-title">{{ look.name }}</h6>
+          <div class="mt-auto">
+            <a href="{% url 'look_detail' look.id %}" class="btn btn-sm btn-outline-primary w-100">Ver look</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-12"><div class="alert alert-info">No hay looks publicados aún.</div></div>
+  {% endfor %}
+</div>
+{% endblock %}
