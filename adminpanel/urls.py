@@ -5,11 +5,13 @@ from . import views
 app_name = "adminpanel"
 
 urlpatterns = [
-    # Login / logout
+    # Login
     path('login/', auth_views.LoginView.as_view(
-        template_name='adminpanel/login.html'
+        template_name='adminpanel/login.html',
+        redirect_authenticated_user=False
     ), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    #Logout
+    path("logout/", auth_views.LogoutView.as_view(next_page="adminpanel:login"), name="logout"),
 
     # Dashboard
     path('', views.admin_productos, name='dashboard'),

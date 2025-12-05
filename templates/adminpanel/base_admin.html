@@ -19,7 +19,7 @@
         <img src="{% static 'img/logo_blanco.png' %}" class="admin-logo mb-2" alt="Lark Boutique" height="80">
       </div>
 
-      <nav class="nav flex-column w-100 px-3">
+      <nav class="nav flex-column w-100 px-3 flex-grow-1">
         <a class="nav-link admin-nav-link
                   {% if request.resolver_match.url_name == 'admin_productos' %}active{% endif %}"
           href="{% url 'adminpanel:admin_productos' %}">
@@ -31,6 +31,21 @@
           href="{% url 'adminpanel:categorias' %}">
           <i class="bi bi-tags"></i> Categorías
         </a>
+
+        <div class="flex-grow-1"></div>
+
+        <a class="nav-link admin-nav-link text-primary"
+          href="{% url 'home' %}">
+          <i class="bi bi-arrow-left-circle"></i> Volver a la tienda
+        </a>
+
+        <form action="{% url 'adminpanel:logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit"
+                  class="nav-link admin-nav-link text-start text-danger w-100 btn btn-link">
+            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+          </button>
+        </form>
       </nav>
     </aside>
 
