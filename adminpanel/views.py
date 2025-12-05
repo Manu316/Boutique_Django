@@ -182,3 +182,10 @@ def admin_producto_eliminar(request, pk: int):
     global ADMIN_PRODUCTS
     ADMIN_PRODUCTS = [p for p in ADMIN_PRODUCTS if p["id"] != pk]
     return redirect("admin_productos")
+
+
+@login_required
+def admin_logout(request):
+    auth_logout(request)
+    return redirect('adminpanel:login') 
+
