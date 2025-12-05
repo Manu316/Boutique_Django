@@ -32,6 +32,12 @@
           <i class="bi bi-tags"></i> Categorías
         </a>
 
+        <a class="nav-link admin-nav-link
+                  {% if request.resolver_match.url_name == 'looks' %}active{% endif %}"
+          href="{% url 'look_list' %}">
+          <i class="bi bi-grid-3x3-gap"></i> Looks
+        </a>        
+
         <div class="flex-grow-1"></div>
 
         <a class="nav-link admin-nav-link text-primary"

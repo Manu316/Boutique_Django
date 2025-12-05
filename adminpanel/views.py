@@ -1,77 +1,76 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django import forms
 
-# Datos simulados
-CATEGORIES = [
-    {"id": 1, "name": "Blusas",   "description": "Prendas superiores femeninas."},
-    {"id": 2, "name": "Faldas",   "description": "Faldas casuales y formales."},
-    {"id": 3, "name": "Interior", "description": "Ropa interior y lencería."},
-]
+from catalog.models import Categoria, Producto, Look
 
-ADMIN_PRODUCTS = [
-    {"id": 1, "name": "Blusa negra",     "category": "Blusas",   "stock": 15, "price": 450},
-    {"id": 2, "name": "Falda roja",      "category": "Faldas",   "stock": 8,  "price": 399},
-    {"id": 3, "name": "Calcetas verdes", "category": "Interior", "stock": 13, "price": 120},
-]
+class CategoriaForm(forms.ModelForm):
+    class Meta:
+        model = Categoria
+        fields = ["nombre", "descripcion"]
+        labels = {
+            "nombre": "Nombre",
+            "descripcion": "Descripción",
+        }
 
+class ProductoForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = ["nombre", "categoria", "descripcion", "talla", "color", "stock", "precio", "imagen"]
+        labels = {
+            "nombre": "Nombre",
+            "categoria": "Categoría",
+            "descripcion": "Descripción",
+            "talla": "Talla",
+            "color": "Color",
+            "stock": "Stock",
+            "precio": "Precio",
+            "imagen": "Ruta de imagen (static)",
+        }
 
-def _next_id(items):
-    """Siguiente id incremental para las listas simuladas."""
-    if not items:
-        return 1
-    return max(i["id"] for i in items) + 1
+class LookForm(forms.ModelForm):
+    class Meta:
+        model = Look
+        fields = ["name", "status", "notes", "tags", "cover"]
+        labels = {
+            "name": "Nombre del look",
+            "status": "Estado",
+            "notes": "Notas",
+            "tags": "Tags (separados por comas)",
+            "cover": "Imagen de portada",
+        }
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "status": forms.Select(attrs={"class": "form-select"}),
+            "notes": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            "tags": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "boho, verano, casual",
+                }
+            ),
+            "cover": forms.ClearableFileInput(attrs={"class": "form-control"}),
+        }
 
-
-# Formularios
-class CategoriaForm(forms.Form):
-    name = forms.CharField(label="Nombre", max_length=50)
-    description = forms.CharField(
-        label="Descripción",
-        widget=forms.Textarea(attrs={"rows": 3}),
-        required=False,
-    )
-
-
-class ProductoForm(forms.Form):
-    name = forms.CharField(label="Nombre", max_length=80)
-    category = forms.ChoiceField(label="Categoría")
-    stock = forms.IntegerField(label="Stock", min_value=0)
-    price = forms.DecimalField(label="Precio", max_digits=8, decimal_places=2)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["category"].choices = [
-            (c["name"], c["name"]) for c in CATEGORIES
-        ]
-
-
-# Dashboard
 @login_required
 def dashboard(request):
-    return redirect('admin_productos')
+    return redirect("adminpanel:admin_productos")
 
-
-# Categorías
 @login_required
 def admin_categorias(request):
+    categorias = Categoria.objects.all().order_by("nombre")
     return render(request, "adminpanel/categorias.html", {
-        "categories": CATEGORIES,
+        "categories": categorias,
         "section": "categorias",
     })
-
 
 @login_required
 def admin_categoria_nueva(request):
     if request.method == "POST":
         form = CategoriaForm(request.POST)
         if form.is_valid():
-            CATEGORIES.append({
-                "id": _next_id(CATEGORIES),
-                "name": form.cleaned_data["name"],
-                "description": form.cleaned_data["description"],
-            })
-            return redirect("admin_categorias")
+            form.save()
+            return redirect("adminpanel:categorias")
     else:
         form = CategoriaForm()
 
@@ -81,24 +80,17 @@ def admin_categoria_nueva(request):
         "section": "categorias",
     })
 
-
 @login_required
 def admin_categoria_editar(request, pk: int):
-    cat = next((c for c in CATEGORIES if c["id"] == pk), None)
-    if not cat:
-        return redirect("admin_categorias")
+    categoria = get_object_or_404(Categoria, pk=pk)
 
     if request.method == "POST":
-        form = CategoriaForm(request.POST)
+        form = CategoriaForm(request.POST, instance=categoria)
         if form.is_valid():
-            cat["name"] = form.cleaned_data["name"]
-            cat["description"] = form.cleaned_data["description"]
-            return redirect("admin_categorias")
+            form.save()
+            return redirect("adminpanel:categorias")
     else:
-        form = CategoriaForm(initial={
-            "name": cat["name"],
-            "description": cat["description"],
-        })
+        form = CategoriaForm(instance=categoria)
 
     return render(request, "adminpanel/categoria_form.html", {
         "form": form,
@@ -106,19 +98,25 @@ def admin_categoria_editar(request, pk: int):
         "section": "categorias",
     })
 
-
 @login_required
 def admin_categoria_eliminar(request, pk: int):
-    global CATEGORIES
-    CATEGORIES = [c for c in CATEGORIES if c["id"] != pk]
-    return redirect("admin_categorias")
+    categoria = get_object_or_404(Categoria, pk=pk)
 
+    if request.method == "POST":
+        categoria.delete()
+        return redirect("adminpanel:categorias")
 
-# Productos
+    return render(request, "adminpanel/confirm_delete.html", {
+        "obj": categoria,
+        "cancel_url": "adminpanel:categorias",
+        "section": "categorias",
+    })
+
 @login_required
 def admin_productos(request):
+    productos = Producto.objects.select_related("categoria").all().order_by("nombre")
     return render(request, "adminpanel/productos.html", {
-        "products": ADMIN_PRODUCTS,
+        "products": productos,
         "section": "productos",
     })
 
@@ -128,15 +126,8 @@ def admin_producto_nuevo(request):
     if request.method == "POST":
         form = ProductoForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
-            ADMIN_PRODUCTS.append({
-                "id": _next_id(ADMIN_PRODUCTS),
-                "name": data["name"],
-                "category": data["category"],
-                "stock": int(data["stock"]),
-                "price": float(data["price"]),
-            })
-            return redirect("admin_productos")
+            form.save()
+            return redirect("adminpanel:admin_productos")
     else:
         form = ProductoForm()
 
@@ -146,29 +137,17 @@ def admin_producto_nuevo(request):
         "section": "productos",
     })
 
-
 @login_required
 def admin_producto_editar(request, pk: int):
-    prod = next((p for p in ADMIN_PRODUCTS if p["id"] == pk), None)
-    if not prod:
-        return redirect("admin_productos")
+    producto = get_object_or_404(Producto, pk=pk)
 
     if request.method == "POST":
-        form = ProductoForm(request.POST)
+        form = ProductoForm(request.POST, instance=producto)
         if form.is_valid():
-            data = form.cleaned_data
-            prod["name"] = data["name"]
-            prod["category"] = data["category"]
-            prod["stock"] = int(data["stock"])
-            prod["price"] = float(data["price"])
-            return redirect("admin_productos")
+            form.save()
+            return redirect("adminpanel:admin_productos")
     else:
-        form = ProductoForm(initial={
-            "name": prod["name"],
-            "category": prod["category"],
-            "stock": prod["stock"],
-            "price": prod["price"],
-        })
+        form = ProductoForm(instance=producto)
 
     return render(request, "adminpanel/producto_form.html", {
         "form": form,
@@ -176,16 +155,73 @@ def admin_producto_editar(request, pk: int):
         "section": "productos",
     })
 
-
 @login_required
 def admin_producto_eliminar(request, pk: int):
-    global ADMIN_PRODUCTS
-    ADMIN_PRODUCTS = [p for p in ADMIN_PRODUCTS if p["id"] != pk]
-    return redirect("admin_productos")
+    producto = get_object_or_404(Producto, pk=pk)
+
+    if request.method == "POST":
+        producto.delete()
+        return redirect("adminpanel:admin_productos")
+
+    return render(request, "adminpanel/confirm_delete.html", {
+        "obj": producto,
+        "cancel_url": "adminpanel:admin_productos",
+        "section": "productos",
+    })
 
 
 @login_required
-def admin_logout(request):
-    auth_logout(request)
-    return redirect('adminpanel:login') 
+def admin_looks(request):
+    looks = Look.objects.all().order_by("-id")
+    return render(request, "adminpanel/looks.html", {
+        "looks": looks,
+        "section": "looks",
+    })
 
+@login_required
+def admin_look_nuevo(request):
+    if request.method == "POST":
+        form = LookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("adminpanel:looks")
+    else:
+        form = LookForm()
+
+    return render(request, "adminpanel/look_form.html", {
+        "form": form,
+        "title": "Nuevo look",
+        "section": "looks",
+    })
+
+@login_required
+def admin_look_editar(request, pk: int):
+    look = get_object_or_404(Look, pk=pk)
+
+    if request.method == "POST":
+        form = LookForm(request.POST, instance=look)
+        if form.is_valid():
+            form.save()
+            return redirect("adminpanel:looks")
+    else:
+        form = LookForm(instance=look)
+
+    return render(request, "adminpanel/look_form.html", {
+        "form": form,
+        "title": "Editar look",
+        "section": "looks",
+    })
+
+@login_required
+def admin_look_eliminar(request, pk: int):
+    look = get_object_or_404(Look, pk=pk)
+
+    if request.method == "POST":
+        look.delete()
+        return redirect("adminpanel:looks")
+
+    return render(request, "adminpanel/confirm_delete.html", {
+        "obj": look,
+        "cancel_url": "adminpanel:looks",
+        "section": "looks",
+    })
