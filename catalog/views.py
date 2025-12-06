@@ -53,10 +53,13 @@ def product_detail(request, pk: int):
 def look_list(request):
     tag = request.GET.get("tag", "").strip().lower()
 
-    looks = Look.objects.filter(status="published").order_by("-created_at")
+    looks = Look.objects.filter(status="published")
 
     if tag:
-        looks = looks.filter(tags__icontains=tag)
+        looks = [
+            l for l in looks
+            if tag in [t.lower() for t in l.tag_list()]
+        ]
 
     return render(request, "catalog/look_list.html", {
         "looks": looks,

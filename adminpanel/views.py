@@ -22,6 +22,7 @@ class CategoriaForm(forms.ModelForm):
             }),
         }
 
+
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
@@ -45,7 +46,7 @@ class ProductoForm(forms.ModelForm):
             self.fields["categoria"].required = False
             self.fields["categoria"].queryset = Categoria.objects.none()
             self.fields["categoria"].widget = forms.Select(
-                choices=[("", "Sin categoría")]
+            choices=[("", "Sin categoría")]
             )
         else:
             self.fields["categoria"].widget.attrs.update({"class": "form-select"})
@@ -61,13 +62,14 @@ class ProductoForm(forms.ModelForm):
 class LookForm(forms.ModelForm):
     class Meta:
         model = Look
-        fields = ["name", "status", "notes", "tags", "cover"]
+        fields = ["name", "status", "notes", "tags", "cover", "productos"]
         labels = {
             "name": "Nombre del look",
             "status": "Estado",
             "notes": "Notas",
             "tags": "Tags (separados por comas)",
             "cover": "Imagen de portada",
+                      "productos": "Productos que componen el look",
         }
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
@@ -80,11 +82,17 @@ class LookForm(forms.ModelForm):
                 }
             ),
             "cover": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "productos": forms.CheckboxSelectMultiple(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["productos"].queryset = Producto.objects.order_by("nombre")
 
 @login_required
 def dashboard(request):
     return redirect("adminpanel:admin_productos")
+
 
 @login_required
 def admin_categorias(request):
@@ -214,6 +222,7 @@ def admin_producto_eliminar(request, pk: int):
         producto.delete()
         return redirect("adminpanel:admin_productos")
 
+
     return render(request, "adminpanel/confirm_delete.html", {
         "obj": producto,
         "cancel_url": "adminpanel:admin_productos",
@@ -231,12 +240,12 @@ def admin_looks(request):
 @login_required
 def admin_look_nuevo(request):
     if request.method == "POST":
-        form = LookForm(request.POST)
+        form = LookForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect("adminpanel:looks")
     else:
-        form = LookForm()
+         form = LookForm()
 
     return render(request, "adminpanel/look_form.html", {
         "form": form,
@@ -244,12 +253,13 @@ def admin_look_nuevo(request):
         "section": "looks",
     })
 
+
 @login_required
 def admin_look_editar(request, pk: int):
     look = get_object_or_404(Look, pk=pk)
 
     if request.method == "POST":
-        form = LookForm(request.POST, instance=look)
+        form = LookForm(request.POST, request.FILES, instance=look)
         if form.is_valid():
             form.save()
             return redirect("adminpanel:looks")

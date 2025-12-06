@@ -51,12 +51,7 @@ class Look(models.Model):
     ]
 
     name = models.CharField("Nombre", max_length=100)
-    status = models.CharField(
-        "Estado",
-        max_length=10,
-        choices=STATUS_CHOICES,
-        default="draft",
-    )
+    status = models.CharField("Estado", max_length=10, choices=STATUS_CHOICES, default="draft")
     notes = models.TextField("Notas", blank=True)
     tags = models.CharField(
         "Tags",
@@ -70,6 +65,8 @@ class Look(models.Model):
         blank=True,
         null=True,
     )
+    productos = models.ManyToManyField(Producto, related_name="looks", blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     class Meta:
