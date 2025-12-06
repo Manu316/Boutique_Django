@@ -77,3 +77,24 @@ class Look(models.Model):
 
     def tag_list(self):
         return [t.strip() for t in self.tags.split(",") if t.strip()]
+
+class LookItem(models.Model):
+    look = models.ForeignKey(
+        Look,
+        on_delete=models.CASCADE,
+        related_name="items",
+    )
+    product = models.ForeignKey(
+        Producto,
+        on_delete=models.CASCADE,
+        related_name="look_items",
+    )
+    note = models.CharField("Nota", max_length=200, blank=True)
+
+    class Meta:
+        verbose_name = "Prenda del look"
+        verbose_name_plural = "Prendas del look"
+
+    def __str__(self):
+        return f"{self.product} en {self.look}" 
+
