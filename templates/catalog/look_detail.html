@@ -32,13 +32,15 @@
           <p class="mb-0">Look armado con prendas de Lark Boutique.</p>
         {% endif %}
       </div>
-      {% if look.tags %}
-      <div class="card-footer bg-white border-0">
-        {% for t in look.tags %}
-          <span class="badge rounded-pill text-bg-secondary badge-chip">{{ t }}</span>
-        {% endfor %}
-      </div>
-      {% endif %}
+        {% if look.tag_list %}
+          <div class="card-footer bg-white border-0">
+            {% for t in look.tag_list %}
+              <span class="badge rounded-pill text-bg-secondary badge-chip">
+                {{ t }}
+              </span>
+            {% endfor %}
+          </div>
+        {% endif %}
     </div>
   </div>
 
@@ -81,3 +83,4 @@
 
 </div>
 {% endblock %}
+

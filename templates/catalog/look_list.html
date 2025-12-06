@@ -18,7 +18,11 @@
     <div class="col-6 col-lg-4">
       <div class="card h-100">
         {% if look.cover %}
-          <img src="{{ look.cover }}" class="card-img-top card-img-fit" alt="{{ look.name }}">
+          <img src="{{ look.cover.url }}" class="look-cover-img" alt="{{ look.name }}">
+        {% else %}
+          <div class="placeholder-box" style="height:400px; width:100%;">
+              <i class="bi bi-image"></i>
+          </div>
         {% endif %}
         <div class="card-body d-flex flex-column">
           <h6 class="card-title">{{ look.name }}</h6>

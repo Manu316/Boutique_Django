@@ -67,10 +67,28 @@ def look_list(request):
     })
 
 def look_detail(request, pk: int):
-    look = get_object_or_404(Look, pk=pk, status="published")
+    look = get_object_or_404(Look, pk=pk)
+
+    look_items = (
+        LookItem.objects
+        .filter(look=look)
+        .select_related("producto")
+    )
+
+    items = []
+    for li in look_items:
+        prod = li.producto
+        items.append({
+            "product_id": prod.id,
+            "product_name": prod.nombre,
+            "variant_sku": "",
+            "note": li.nota,
+            "image": prod.imagen or "",
+        })
 
     return render(request, "catalog/look_detail.html", {
         "look": look,
+        "items": items,
     })
 
 def nosotros(request):
@@ -79,3 +97,4 @@ def nosotros(request):
 
 def contacto(request):
     return render(request, "catalog/contacto.html")
+
