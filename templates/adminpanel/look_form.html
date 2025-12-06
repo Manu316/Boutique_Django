@@ -1,0 +1,63 @@
+{% extends "adminpanel/base_admin.html" %}
+{% block title %}{{ title }} - Panel Lark{% endblock %}
+
+{% block content %}
+<div class="admin-card-form">
+  <h2 class="mb-4 admin-title">{{ title }}</h2>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label class="form-label">{{ form.name.label }}</label>
+      {{ form.name }}
+      {{ form.name.errors }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">{{ form.status.label }}</label>
+      {{ form.status }}
+      {{ form.status.errors }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">{{ form.notes.label }}</label>
+      {{ form.notes }}
+      {{ form.notes.errors }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">{{ form.tags.label }}</label>
+      {{ form.tags }}
+      {{ form.tags.errors }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">{{ form.cover.label }}</label>
+      {{ form.cover }}
+      {{ form.cover.errors }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">{{ form.productos.label }}</label>
+      <div class="form-check-group">
+        {% for checkbox in form.productos %}
+          <div class="form-check">
+            {{ checkbox.tag }} {{ checkbox.choice_label }}
+          </div>
+        {% endfor %}
+      </div>
+      {{ form.productos.errors }}
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+      <a href="{% url 'adminpanel:looks' %}" class="btn btn-outline-secondary">
+        Cancelar
+      </a>
+      <button type="submit" class="btn btn-primary">
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
