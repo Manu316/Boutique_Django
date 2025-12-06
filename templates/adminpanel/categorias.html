@@ -13,17 +13,23 @@
   {% for cat in categories %}
     <div class="admin-card-category">
       <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5 class="mb-0">{{ cat.name }}</h5>
+        <h5 class="mb-0">{{ cat.nombre }}</h5>
         <div>
-          <button class="btn btn-sm btn-link text-pink" title="Eliminar">
+          <!-- Eliminar -->
+          <a href="{% url 'adminpanel:categoria_eliminar' cat.pk %}"
+             class="btn btn-sm btn-link text-pink" title="Eliminar">
             <i class="bi bi-trash"></i>
-          </button>
-          <button class="btn btn-sm btn-link text-pink" title="Editar">
+          </a>
+          <!-- Editar -->
+          <a href="{% url 'adminpanel:categoria_editar' cat.pk %}"
+             class="btn btn-sm btn-link text-pink" title="Editar">
             <i class="bi bi-pencil-square"></i>
-          </button>
+          </a>
         </div>
       </div>
-      <p class="mb-0 text-muted small">{{ cat.description }}</p>
+      <p class="mb-0 text-muted small">
+        {{ cat.descripcion|default:"Sin descripción" }}
+      </p>
     </div>
   {% empty %}
     <p class="text-muted">No hay categorías registradas.</p>
@@ -36,24 +42,33 @@
     <div class="modal-content admin-modal">
       <div class="modal-body">
         <h5 class="mb-3">Nueva categoría</h5>
-        <form>
+
+        <form method="post" action="{% url 'adminpanel:categorias' %}">
+          {% csrf_token %}
+          {{ form.non_field_errors }}
+
           <div class="mb-3">
-            <label class="form-label">Nombre</label>
-            <input type="text" class="form-control" placeholder="Ej. Blusas">
+            <label class="form-label" for="{{ form.nombre.id_for_label }}">Nombre</label>
+            {{ form.nombre }}
+            {{ form.nombre.errors }}
           </div>
+
           <div class="mb-3">
-            <label class="form-label">Descripción</label>
-            <input type="text" class="form-control" placeholder="Descripción breve">
+            <label class="form-label" for="{{ form.descripcion.id_for_label }}">Descripción</label>
+            {{ form.descripcion }}
+            {{ form.descripcion.errors }}
           </div>
+
           <div class="d-flex justify-content-end gap-2">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
               Cancelar
             </button>
             <button type="submit" class="btn btn-primary">
-              Continuar
+              Guardar
             </button>
           </div>
         </form>
+
       </div>
     </div>
   </div>

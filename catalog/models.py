@@ -11,7 +11,6 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nombre
 
-
 class Producto(models.Model):
     TALLAS = [
         ("XS", "XS"),
@@ -23,13 +22,20 @@ class Producto(models.Model):
     ]
 
     nombre = models.CharField(max_length=80)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name="productos")
+    categoria = models.ForeignKey(
+        Categoria,
+        on_delete=models.SET_NULL,
+        related_name="productos",
+        null=True,
+        blank=True,
+    )
     descripcion = models.TextField(blank=True)
     talla = models.CharField(max_length=5, choices=TALLAS, blank=True)
     color = models.CharField(max_length=30, blank=True)
     stock = models.PositiveIntegerField(default=0)
     precio = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-    imagen = models.CharField(max_length=200, blank=True)
+
+    imagen = models.ImageField(upload_to="productos/", blank=True, null=True)
 
     class Meta:
         verbose_name = "Producto"
@@ -37,7 +43,6 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
-
 
 class Look(models.Model):
     STATUS_CHOICES = [

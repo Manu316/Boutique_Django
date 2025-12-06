@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django import forms
-
 from catalog.models import Categoria, Producto, Look
 
 class CategoriaForm(forms.ModelForm):
@@ -12,11 +11,22 @@ class CategoriaForm(forms.ModelForm):
             "nombre": "Nombre",
             "descripcion": "Descripción",
         }
+        widgets = {
+            "nombre": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Ej. Blusas",
+            }),
+            "descripcion": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Descripción breve",
+            }),
+        }
 
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ["nombre", "categoria", "descripcion", "talla", "color", "stock", "precio", "imagen"]
+        fields = ["nombre", "categoria", "descripcion", "talla",
+                  "color", "stock", "precio", "imagen"]
         labels = {
             "nombre": "Nombre",
             "categoria": "Categoría",
@@ -25,8 +35,28 @@ class ProductoForm(forms.ModelForm):
             "color": "Color",
             "stock": "Stock",
             "precio": "Precio",
-            "imagen": "Ruta de imagen (static)",
+            "imagen": "Imagen del producto",
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if not Categoria.objects.exists():
+            self.fields["categoria"].required = False
+            self.fields["categoria"].queryset = Categoria.objects.none()
+            self.fields["categoria"].widget = forms.Select(
+                choices=[("", "Sin categoría")]
+            )
+        else:
+            self.fields["categoria"].widget.attrs.update({"class": "form-select"})
+
+        for name, field in self.fields.items():
+            if name == "categoria":
+                continue
+            css = "form-control"
+            if name == "imagen":
+                css = "form-control"
+            field.widget.attrs.setdefault("class", css)
 
 class LookForm(forms.ModelForm):
     class Meta:
@@ -58,9 +88,19 @@ def dashboard(request):
 
 @login_required
 def admin_categorias(request):
+    if request.method == "POST":
+        form = CategoriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("adminpanel:categorias")
+    else:
+        form = CategoriaForm()
+
     categorias = Categoria.objects.all().order_by("nombre")
+
     return render(request, "adminpanel/categorias.html", {
         "categories": categorias,
+        "form": form,
         "section": "categorias",
     })
 
@@ -114,17 +154,26 @@ def admin_categoria_eliminar(request, pk: int):
 
 @login_required
 def admin_productos(request):
+    if request.method == "POST":
+        form = ProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("adminpanel:admin_productos")
+    else:
+        form = ProductoForm()
+
     productos = Producto.objects.select_related("categoria").all().order_by("nombre")
+
     return render(request, "adminpanel/productos.html", {
         "products": productos,
+        "form": form,
         "section": "productos",
     })
-
 
 @login_required
 def admin_producto_nuevo(request):
     if request.method == "POST":
-        form = ProductoForm(request.POST)
+        form = ProductoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect("adminpanel:admin_productos")
@@ -137,12 +186,13 @@ def admin_producto_nuevo(request):
         "section": "productos",
     })
 
+
 @login_required
 def admin_producto_editar(request, pk: int):
     producto = get_object_or_404(Producto, pk=pk)
 
     if request.method == "POST":
-        form = ProductoForm(request.POST, instance=producto)
+        form = ProductoForm(request.POST, request.FILES, instance=producto)
         if form.is_valid():
             form.save()
             return redirect("adminpanel:admin_productos")
@@ -154,6 +204,7 @@ def admin_producto_editar(request, pk: int):
         "title": "Editar producto",
         "section": "productos",
     })
+
 
 @login_required
 def admin_producto_eliminar(request, pk: int):
@@ -168,7 +219,6 @@ def admin_producto_eliminar(request, pk: int):
         "cancel_url": "adminpanel:admin_productos",
         "section": "productos",
     })
-
 
 @login_required
 def admin_looks(request):

@@ -1,0 +1,14 @@
+{% extends "adminpanel/base_admin.html" %}
+{% block title %}Confirmar eliminación – Lark Boutique{% endblock %}
+
+{% block content %}
+<h1 class="h4 mb-3">Eliminar</h1>
+
+<p>¿Seguro que deseas eliminar <strong>{{ obj }}</strong>?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+  <a href="{% url cancel_url %}" class="btn btn-outline-secondary">Cancelar</a>
+</form>
+{% endblock %}

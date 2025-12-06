@@ -21,16 +21,17 @@ def product_list(request):
         )
 
     if size:
-        products = products.filter(talla__iexact=size)
+        products = products.filter(talla=size)
 
     if color:
         products = products.filter(color__icontains=color)
 
-    sizes = ["XS", "S", "M", "L", "XL", "UNI"]
+    sizes = [code for code, _ in Producto.TALLAS]
     colors = (
         Producto.objects.exclude(color="")
         .values_list("color", flat=True)
         .distinct()
+        .order_by("color")
     )
 
     return render(request, "catalog/product_list.html", {
@@ -45,9 +46,8 @@ def product_list(request):
 
 def product_detail(request, pk: int):
     product = get_object_or_404(Producto, pk=pk)
-
     return render(request, "catalog/product_detail.html", {
-        "product": product,
+        "product": product
     })
 
 def look_list(request):
