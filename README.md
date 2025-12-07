@@ -6,6 +6,11 @@ Incluye dos interfaces principales:
 - **Sitio público**: catálogo de productos, detalles, búsqueda, filtros y sección de looks.
 - **Panel administrativo**: interfaz protegida para gestionar productos, categorías y looks.
 
+## Integrantes
+- Carlos Manuel Garcia Cruz: https://github.com/Manu316
+- Hector Adrian Mateu Arellano: https://github.com/Hector-Adrian
+- Alexis Yahir Nava Moya: https://github.com/alexnama759
+- Roberto Zuñiga Roman: https://github.com/robzun
 ---
 
 ## Características principales

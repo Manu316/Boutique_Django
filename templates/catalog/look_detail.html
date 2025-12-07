@@ -9,33 +9,44 @@
   <!-- Portada del look -->
   <div class="col-12 col-lg-6">
     <div class="card h-100">
+
       {% if look.cover %}
-        <img src="{{ look.cover.url }}" class="card-img-top card-img-fit" alt="{{ look.name }}">
+        <img
+          src="{{ look.cover.url }}"
+          class="card-img-top card-img-fit"
+          alt="{{ look.name }}"
+        >
       {% else %}
-        <div class="card-img-top card-img-fit d-flex align-items-center justify-content-center text-muted">
-          Look sin portada
+        <div
+          class="card-img-top card-img-fit placeholder-product
+                 d-flex align-items-center justify-content-center"
+        >
+          <i class="bi bi-images" style="font-size: 2.5rem; opacity:.5;"></i>
         </div>
       {% endif %}
+
       <div class="card-body">
         <h2 class="card-title mb-2">{{ look.name }}</h2>
         <p class="text-muted mb-1">
           {% if look.status == "published" %}Publicado{% else %}Borrador{% endif %}
         </p>
+
         {% if look.notes %}
           <p class="mb-0">{{ look.notes }}</p>
         {% else %}
           <p class="mb-0">Look armado con prendas de Lark Boutique.</p>
         {% endif %}
       </div>
-        {% if look.tag_list %}
-          <div class="card-footer bg-white border-0">
-            {% for t in look.tag_list %}
-              <span class="badge rounded-pill text-bg-secondary badge-chip">
-                {{ t }}
-              </span>
-            {% endfor %}
-          </div>
-        {% endif %}
+
+      {% if look.tag_list %}
+        <div class="card-footer bg-white border-0">
+          {% for t in look.tag_list %}
+            <span class="badge rounded-pill text-bg-secondary badge-chip">
+              {{ t }}
+            </span>
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
   </div>
 
@@ -45,26 +56,50 @@
     <div class="row g-3">
       {% for item in items %}
         <div class="col-12 col-md-6">
-          <div class="card h-100">
-            {% if item.image %}
-              <img src="{{ item.image.url }}" class="card-img-top card-img-fit" alt="{{ item.product_name }}">
-            {% endif %}
-            <div class="card-body d-flex flex-column">
-              <h6 class="card-title">{{ item.product_name }}</h6>
-              {% if item.variant_sku %}
-                <p class="text-muted small mb-1">SKU: {{ item.variant_sku }}</p>
+
+          <a href="{% url 'product_detail' item.product_id %}"
+            class="text-decoration-none text-reset">
+
+            <div class="card h-100 look-item-card">
+
+              {% if item.image %}
+                <img
+                  src="{{ item.image.url }}"
+                  class="card-img-top card-img-fit"
+                  alt="{{ item.product_name }}"
+                >
+              {% else %}
+                <div
+                  class="card-img-top card-img-fit placeholder-product
+                        d-flex align-items-center justify-content-center"
+                >
+                  <i class="bi bi-image" style="font-size: 2.5rem; opacity:.5;"></i>
+                </div>
               {% endif %}
-              {% if item.note %}
-                <p class="small mb-2">{{ item.note }}</p>
-              {% endif %}
-              <div class="mt-auto">
-                <a href="{% url 'product_detail' item.product_id %}"
-                   class="btn btn-sm btn-outline-primary w-100">
-                  Ver producto
-                </a>
+
+              <div class="card-body d-flex flex-column">
+                <h6 class="card-title">{{ item.product_name }}</h6>
+
+                {% if item.variant_sku %}
+                  <p class="text-muted small mb-1">
+                    SKU: {{ item.variant_sku }}
+                  </p>
+                {% endif %}
+
+                {% if item.note %}
+                  <p class="small mb-2">{{ item.note }}</p>
+                {% endif %}
+
+                <div class="mt-auto">
+                  <span class="btn btn-sm btn-outline-primary w-100">
+                    Ver producto
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+
+          </a>
+
         </div>
       {% empty %}
         <div class="col-12">
@@ -78,4 +113,3 @@
 
 </div>
 {% endblock %}
-

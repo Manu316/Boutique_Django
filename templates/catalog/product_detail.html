@@ -7,9 +7,13 @@
 <div class="row g-4">
   <div class="col-12 col-md-6">
     {% if product.imagen %}
-      <img src="{{ product.imagen.url }}" class="img-main" alt="{{ product.nombre }}">
+        <img src="{{ product.imagen.url }}" 
+            alt="{{ product.nombre }}" 
+            class="product-detail-img">
     {% else %}
-      <img src="{% static 'img/placeholder_producto.jpg' %}" class="img-main" alt="{{ product.nombre }}">
+        <div class="placeholder-detail">
+            <i class="bi bi-image"></i>
+        </div>
     {% endif %}
   </div>
 

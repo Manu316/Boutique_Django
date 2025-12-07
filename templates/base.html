@@ -27,33 +27,56 @@
     }
 
   .card-img-fit {
-    width: 100%;
-    height: auto;
-    max-height: 480px;
-    object-fit: contain;
-    object-position: center top;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: .5rem .5rem 0 0;
   }
 
-    .placeholder-product {
+  .placeholder-product {
+      width: 100%;
+      aspect-ratio: 1 / 1;
       background: linear-gradient(135deg, #ffd0ea, #f9a9d6);
       border-radius: .5rem .5rem 0 0;
-    }
 
-    .placeholder-box {
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        border-radius: 10px;
-        background: linear-gradient(180deg, #ffd6f0, #f7a3d3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
 
-    .placeholder-box i {
-        font-size: 42px;
-        color: #b45caf;
-        opacity: 0.6;
-    }     
+  .placeholder-product i {
+      font-size: 3rem;
+      color: #b45caf;
+      opacity: 0.55;
+  }
+
+  .product-detail-img {
+      width: 100%;
+      max-width: 380px;
+      height: auto;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 12px;
+      padding: 8px;
+  }
+
+  .placeholder-detail {
+      width: 100%;
+      max-width: 380px;
+      aspect-ratio: 1 / 1;
+      background: linear-gradient(135deg, #ffd0ea, #f9a9d6);
+      border-radius: 12px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  .placeholder-detail i {
+      font-size: 4rem;
+      color: #b45caf;
+      opacity: 0.5;
+  }
   </style>
 </head>
 
@@ -127,5 +150,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
