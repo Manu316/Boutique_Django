@@ -10,12 +10,7 @@
   <div class="col-12 col-lg-6">
     <div class="card h-100">
       {% if look.cover %}
-        {# Si cover es una URL externa la usamos directo #}
-        {% if "http" in look.cover %}
-          <img src="{{ look.cover }}" class="card-img-top card-img-fit" alt="{{ look.name }}">
-        {% else %}
-          <img src="{% static look.cover %}" class="card-img-top card-img-fit" alt="{{ look.name }}">
-        {% endif %}
+        <img src="{{ look.cover.url }}" class="card-img-top card-img-fit" alt="{{ look.name }}">
       {% else %}
         <div class="card-img-top card-img-fit d-flex align-items-center justify-content-center text-muted">
           Look sin portada
@@ -52,7 +47,7 @@
         <div class="col-12 col-md-6">
           <div class="card h-100">
             {% if item.image %}
-              <img src="{% static item.image %}" class="card-img-top card-img-fit" alt="{{ item.product_name }}">
+              <img src="{{ item.image.url }}" class="card-img-top card-img-fit" alt="{{ item.product_name }}">
             {% endif %}
             <div class="card-body d-flex flex-column">
               <h6 class="card-title">{{ item.product_name }}</h6>

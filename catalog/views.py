@@ -69,21 +69,16 @@ def look_list(request):
 def look_detail(request, pk: int):
     look = get_object_or_404(Look, pk=pk)
 
-    look_items = (
-        LookItem.objects
-        .filter(look=look)
-        .select_related("product")
-    )
+    productos = look.productos.all()
 
     items = []
-    for li in look_items:
-        product = li.product
+    for p in productos:
         items.append({
-            "product_id": product.id,
-            "product_name": product.nombre,
+            "product_id": p.id,
+            "product_name": p.nombre,
             "variant_sku": "",
-            "note": li.note,
-            "image": product.imagen,
+            "note": "",
+            "image": p.imagen,
         })
 
     return render(request, "catalog/look_detail.html", {
