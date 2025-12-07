@@ -96,5 +96,4 @@ class LookItem(models.Model):
         verbose_name_plural = "Prendas del look"
 
     def __str__(self):
-        return f"{self.product} en {self.look}" 
-
+        return f"{self.product} en {self.look}"

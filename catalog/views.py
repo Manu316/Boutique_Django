@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
-from .models import Producto, Categoria, Look
+from .models import Producto, Categoria, Look, LookItem
 
 
 def home(request):
@@ -72,18 +72,18 @@ def look_detail(request, pk: int):
     look_items = (
         LookItem.objects
         .filter(look=look)
-        .select_related("producto")
+        .select_related("product")
     )
 
     items = []
     for li in look_items:
-        prod = li.producto
+        product = li.product
         items.append({
-            "product_id": prod.id,
-            "product_name": prod.nombre,
+            "product_id": product.id,
+            "product_name": product.nombre,
             "variant_sku": "",
-            "note": li.nota,
-            "image": prod.imagen or "",
+            "note": li.note,
+            "image": product.imagen,
         })
 
     return render(request, "catalog/look_detail.html", {
