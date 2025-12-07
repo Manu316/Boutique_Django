@@ -14,5 +14,4 @@ Thumbs.db
 # Django specific files
 *.log
 local_settings.py
-db.sqlite3
 /media
