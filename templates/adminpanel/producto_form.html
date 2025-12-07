@@ -6,7 +6,7 @@
   <h2 class="mb-4">{{ title }}</h2>
 
   <form method="post"
-        enctype="multipart/form-data">  {# <- IMPORTANTE #}
+        enctype="multipart/form-data">
     {% csrf_token %}
 
     {{ form.non_field_errors }}
