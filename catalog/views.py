@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from .models import Producto, Categoria, Look, LookItem
-
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings  
 
 def home(request):
     return redirect("product_list")
@@ -89,7 +91,36 @@ def look_detail(request, pk: int):
 def nosotros(request):
     return render(request, "catalog/nosotros.html")
 
-
 def contacto(request):
-    return render(request, "catalog/contacto.html")
+    if request.method == "POST":
+        nombre = request.POST.get("nombre", "").strip()
+        email = request.POST.get("email", "").strip()
+        mensaje = request.POST.get("mensaje", "").strip()
 
+        if not nombre or not email or not mensaje:
+            messages.error(request, "Por favor, completa todos los campos.")
+        else:
+            cuerpo = (
+                f"Nuevo mensaje desde el formulario de contacto:\n\n"
+                f"Nombre: {nombre}\n"
+                f"Email: {email}\n\n"
+                f"Mensaje:\n{mensaje}"
+            )
+
+            try:
+                destinatario = getattr(settings, "CONTACT_EMAIL", None) or settings.DEFAULT_FROM_EMAIL
+
+                send_mail(
+                    subject=f"Contacto Lark Boutique - {nombre}",
+                    message=cuerpo,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[destinatario],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                messages.error(request, f"Ocurrió un error al enviar el correo: {e}")
+            else:
+                messages.success(request, "¡Gracias por escribirnos! Te responderemos pronto.")
+                return redirect("contacto")
+
+    return render(request, "contacto.html")

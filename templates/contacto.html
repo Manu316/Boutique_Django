@@ -4,20 +4,34 @@
 {% block content %}
 <div class="container py-5">
   <h2 class="fw-bold mb-4" style="color: var(--pink-main);">Contáctanos</h2>
+
+  {# mensajes de éxito / error #}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} mb-3">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
   <div class="row">
     <div class="col-md-6">
-      <form>
+      <form method="post" action="{% url 'contacto' %}">
+        {% csrf_token %}
         <div class="mb-3">
           <label for="nombre" class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
+          <input type="text" class="form-control" id="nombre" name="nombre"
+                placeholder="Tu nombre" value="{{ request.POST.nombre }}">
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Correo electrónico</label>
-          <input type="email" class="form-control" id="email" placeholder="tucorreo@ejemplo.com">
+          <input type="email" class="form-control" id="email" name="email"
+                placeholder="tucorreo@ejemplo.com" value="{{ request.POST.email }}">
         </div>
         <div class="mb-3">
           <label for="mensaje" class="form-label">Mensaje</label>
-          <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje"></textarea>
+          <textarea class="form-control" id="mensaje" name="mensaje" rows="4"
+                    placeholder="Escribe tu mensaje">{{ request.POST.mensaje }}</textarea>
         </div>
         <button type="submit" class="btn btn-primary">Enviar mensaje</button>
       </form>

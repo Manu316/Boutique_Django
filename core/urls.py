@@ -25,7 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name="home.html"), name="home"),
     path('nosotros/', TemplateView.as_view(template_name="nosotros.html"), name="nosotros"),
-    path('contacto/', TemplateView.as_view(template_name="contacto.html"), name="contacto"),
     path("", include("catalog.urls")),
     path("adminpanel/", include(("adminpanel.urls", "adminpanel"), namespace="adminpanel")),
 ]

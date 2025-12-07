@@ -135,3 +135,15 @@ MEDIA_ROOT = BASE_DIR / "media"
 LOGIN_URL = "/adminpanel/login/"
 LOGIN_REDIRECT_URL = "/adminpanel/productos/"
 LOGOUT_REDIRECT_URL = "/adminpanel/login/"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = "c46629465@gmail.com"
+EMAIL_HOST_PASSWORD = "uxmtrnwcayfwvwoh"
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+CONTACT_EMAIL = EMAIL_HOST_USER
