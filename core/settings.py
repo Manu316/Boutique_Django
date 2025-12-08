@@ -142,8 +142,8 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = "c46629465@gmail.com"
-EMAIL_HOST_PASSWORD = "uxmtrnwcayfwvwoh"
+EMAIL_HOST_USER = "boutiquelark@gmail.com"
+EMAIL_HOST_PASSWORD = "degcewkjjzivrmaz"
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CONTACT_EMAIL = EMAIL_HOST_USER
