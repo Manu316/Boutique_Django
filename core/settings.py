@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +26,11 @@ SECRET_KEY = 'django-insecure-8hw@1(cj=((_gc0vahgcvk5rak^#a18)mcv5&9g!s6$0-&)j-*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["larkboutique.pythonanywhere.com"]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://larkboutique.pythonanywhere.com",
+]
 
 # Application definition
 
@@ -122,6 +126,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -142,8 +147,8 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = "c46629465@gmail.com"
-EMAIL_HOST_PASSWORD = "uxmtrnwcayfwvwoh"
+EMAIL_HOST_USER = "boutiquelark@gmail.com"
+EMAIL_HOST_PASSWORD = "degcewkjjzivrmaz"
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CONTACT_EMAIL = EMAIL_HOST_USER
